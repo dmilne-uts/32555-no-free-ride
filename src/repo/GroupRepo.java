@@ -1,9 +1,9 @@
 package repo;
 
+import model.Assignment;
 import model.Group;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+
+import java.util.*;
 
 public class GroupRepo {
 
@@ -23,6 +23,20 @@ public class GroupRepo {
 
     public Collection<Group> getAll() {
         return this.groupsById.values();
+    }
+
+    public List<Group> getGroupsForAssignment(Assignment assignment) {
+
+        List<Group> groups = new ArrayList<>() ;
+
+        for  (Group group:  this.groupsById.values()) {
+
+            if (group.getAssignmentId().equals(assignment.getId())) {
+                groups.add(group) ;
+            }
+        }
+
+        return groups ;
     }
 
     public int getSize() {

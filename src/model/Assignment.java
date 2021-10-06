@@ -1,15 +1,14 @@
 package model;
 
-public class Group {
+public class Assignment {
 
     private Integer id ;
-    private String name ;
-    private Integer assignmentId ;
 
-    public Group(Integer id, String name, Integer assignmentId) {
+    private String name ;
+
+    public Assignment(Integer id, String name) {
         this.id = id;
         this.name = name;
-        this.assignmentId = assignmentId;
     }
 
     public Integer getId() {
@@ -18,10 +17,6 @@ public class Group {
 
     public String getName() {
         return name;
-    }
-
-    public Integer getAssignmentId() {
-        return assignmentId;
     }
 
     public String toString() {

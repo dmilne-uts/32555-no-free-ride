@@ -1,6 +1,8 @@
+import model.Assignment;
 import model.Group;
 import model.GroupMembership;
 import model.Student;
+import repo.AssignmentRepo;
 import repo.GroupMembershipRepo;
 import repo.GroupRepo;
 import repo.StudentRepo;
@@ -10,7 +12,8 @@ public class App {
     private StudentRepo students = new StudentRepo();
     private GroupRepo groups = new GroupRepo() ;
     private GroupMembershipRepo memberships = new GroupMembershipRepo() ;
-    
+    private AssignmentRepo assignments = new AssignmentRepo() ;
+
     private void setupStudents() {
 
         System.out.println("Setting up students") ;
@@ -26,13 +29,6 @@ public class App {
         student = new Student( 3456789, "Jeff", "Jefferson") ;
         students.save(student) ;
 
-        /*
-        To accomplish Task 1, you can add additional students by replicating the lines above, and simply changing
-        the values you pass in to the student constructor.
-
-        For example:
-         */
-
         student = new Student(4567890, "Nishat", "Hartley") ;
         students.save(student) ;
 
@@ -43,17 +39,50 @@ public class App {
         students.save(student) ;
 
 
+        // Adding a whole bunch more students, so we can have multiple assignments and multiple groups
+
+
+
+
+        student = new Student(9000001, "Haydon", "Lovell") ;
+        students.save(student) ;
+
+        student = new Student(9000002, "Imogen", "Cardenas") ;
+        students.save(student) ;
+
+        student = new Student(9000003, "Samira", "Parra") ;
+        students.save(student) ;
+
+
+        student = new Student(9000004, "Lavinia", "Lin") ;
+        students.save(student) ;
+
+        student = new Student(9000005, "Mikael", "Whitaker") ;
+        students.save(student) ;
+
+        student = new Student(9000006, "Felicity", "Parrish") ;
+        students.save(student) ;
+
         System.out.println("Finished setting up students") ;
     }
 
-    private void setupGroups() {
+    /*
 
-        System.out.println("Setting up groups") ;
+    Altering this function to set up assignments and groups simultaneously
+     */
+    private void setupAssignmentsAndGroups() {
 
+        System.out.println("Setting up assignments and groups") ;
+
+        Assignment assignment ;
         Group group ;
         GroupMembership membership ;
 
-        group = new Group(groups.getSize(), "The unimaginatively named") ;
+
+        assignment = new Assignment(assignments.getSize(), "Report on ethical implications of new technology") ;
+        assignments.save(assignment);
+
+        group = new Group(groups.getSize(), "The unimaginatively named", assignment.getId()) ;
         groups.save(group);
 
         //adding Bob Bobson
@@ -68,15 +97,9 @@ public class App {
         membership = new GroupMembership(memberships.getSize(), group.getId(), 3456789) ;
         memberships.save(membership);
 
-        /*
-        To accomplish Task 2, you can add groups and memberships  by replicating the lines above, and simply changing
-        the values you pass in to the respective constructors.
-
-        For example:
-         */
 
         //creating a second group
-        group = new Group(groups.getSize(), "The randomly named") ;
+        group = new Group(groups.getSize(), "The randomly named", assignment.getId()) ;
         groups.save(group);
 
         //adding Nishat
@@ -91,6 +114,32 @@ public class App {
         membership = new GroupMembership(memberships.getSize(), group.getId(), 6789012) ;
         memberships.save(membership);
 
+
+        //second assignment
+        assignment = new Assignment(assignments.getSize(), "Software development project") ;
+        assignments.save(assignment);
+
+        //third group
+        group = new Group(groups.getSize(), "The A Team", assignment.getId()) ;
+        groups.save(group);
+
+        //since we don't need to do anyhing with a group membership except save it, we can take some shortcuts:
+        memberships.save(new GroupMembership(memberships.getSize(), group.getId(), 9000001));
+        memberships.save(new GroupMembership(memberships.getSize(), group.getId(), 9000002));
+        memberships.save(new GroupMembership(memberships.getSize(), group.getId(), 9000003));
+        memberships.save(new GroupMembership(memberships.getSize(), group.getId(), 3456789));
+        memberships.save(new GroupMembership(memberships.getSize(), group.getId(), 1234567));
+
+        //fourth group
+        group = new Group(groups.getSize(), "The Them", assignment.getId()) ;
+        groups.save(group);
+
+        memberships.save(new GroupMembership(memberships.getSize(), group.getId(), 9000004));
+        memberships.save(new GroupMembership(memberships.getSize(), group.getId(), 9000005));
+        memberships.save(new GroupMembership(memberships.getSize(), group.getId(), 9000006));
+        memberships.save(new GroupMembership(memberships.getSize(), group.getId(), 2345678));
+        memberships.save(new GroupMembership(memberships.getSize(), group.getId(), 6789012));
+
     }
 
 
@@ -104,18 +153,27 @@ public class App {
         }
     }
 
-    private void printGroups() {
+    private void printAssignmentsAndGroups() {
 
-        System.out.println("There are " + groups.getSize() + " groups: ");
+        System.out.println("There are " + groups.getSize() + " groups across " + assignments.getSize() + " assignments: ");
 
-        for (Group group: groups.getAll()) {
-            System.out.println("  " + group) ;
+        for (Assignment assignment: assignments.getAll()) {
 
-            for (Integer studentId: memberships.getStudentIds(group)) {
-                Student member = students.getById(studentId) ;
-                System.out.println("    " + member) ;
+            System.out.println(assignment) ;
+
+            for (Group group: groups.getGroupsForAssignment(assignment)) {
+
+                System.out.println("  " + group) ;
+
+                for (Integer studentId: memberships.getStudentIds(group)) {
+                    Student member = students.getById(studentId) ;
+                    System.out.println("    " + member) ;
+                }
+
             }
+
         }
+
     }
 
 
@@ -126,8 +184,8 @@ public class App {
         app.setupStudents();
         app.printStudents();
 
-        app.setupGroups();
-        app.printGroups();
+        app.setupAssignmentsAndGroups();
+        app.printAssignmentsAndGroups();
     }
 }
 

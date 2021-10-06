@@ -204,7 +204,7 @@ public class App {
 
         review = reviewer.createReview(reviews.getSize(), "Bob") ;
         reviews.save(review) ;
-
+/*
 
         review = reviewer.createReview(reviews.getSize(), "James") ;
         reviews.save(review) ;
@@ -213,13 +213,14 @@ public class App {
         review = reviewer.createReview(reviews.getSize(), "Jeff") ;
         reviews.save(review) ;
 
+*/
     }
 
     private void printReviews() {
 
         for (Review review: reviews.getAll()) {
 
-            System.out.println("Review " + review.getId());
+            System.out.println("Review " + review.getId() + "(score = " + review.getScore() + ")");
 
             System.out.println("  " + review.getCommunicationAmount().getDescription()) ;
 

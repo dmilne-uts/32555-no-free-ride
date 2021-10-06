@@ -2,6 +2,10 @@ import model.Assignment;
 import model.Group;
 import model.GroupMembership;
 import model.Student;
+import model.reviewing.CommunicationAmount;
+import model.reviewing.ContributionAmount;
+import model.reviewing.LowCommunicationReason;
+import model.reviewing.MeetingContribution;
 import repo.AssignmentRepo;
 import repo.GroupMembershipRepo;
 import repo.GroupRepo;
@@ -176,6 +180,29 @@ public class App {
 
     }
 
+    private void printReviewQuestions() {
+
+        System.out.println(CommunicationAmount.question) ;
+        for (CommunicationAmount ca: CommunicationAmount.values()) {
+            System.out.println("  (" + ca + ") " + ca.getDescription()) ;
+        }
+
+        System.out.println(LowCommunicationReason.question) ;
+        for (int i=0 ; i<LowCommunicationReason.values().length ; i ++) {
+            System.out.println("  (" + LowCommunicationReason.values()[i] + ") " + LowCommunicationReason.descriptions[i]) ;
+        }
+
+        System.out.println(MeetingContribution.question) ;
+        for (int i=0 ; i<MeetingContribution.values().length ; i ++) {
+            System.out.println("  (" + MeetingContribution.values()[i] + ") " + MeetingContribution.descriptions[i]) ;
+        }
+
+        System.out.println(ContributionAmount.question) ;
+        for (int i=0 ; i<ContributionAmount.values().length ; i ++) {
+            System.out.println("  (" + ContributionAmount.values()[i] + ") " + ContributionAmount.descriptions[i]) ;
+        }
+    }
+
 
     public static void main(String args[]) {
 
@@ -186,6 +213,8 @@ public class App {
 
         app.setupAssignmentsAndGroups();
         app.printAssignmentsAndGroups();
+
+        app.printReviewQuestions();
     }
 }
 

@@ -1,15 +1,7 @@
-import model.Assignment;
-import model.Group;
-import model.GroupMembership;
-import model.Student;
-import model.reviewing.CommunicationAmount;
-import model.reviewing.ContributionAmount;
-import model.reviewing.LowCommunicationReason;
-import model.reviewing.MeetingContribution;
-import repo.AssignmentRepo;
-import repo.GroupMembershipRepo;
-import repo.GroupRepo;
-import repo.StudentRepo;
+import model.*;
+import model.reviewing.*;
+import repo.*;
+import service.*;
 
 public class App {
 
@@ -17,6 +9,7 @@ public class App {
     private GroupRepo groups = new GroupRepo() ;
     private GroupMembershipRepo memberships = new GroupMembershipRepo() ;
     private AssignmentRepo assignments = new AssignmentRepo() ;
+    private ReviewRepo reviews = new ReviewRepo() ;
 
     private void setupStudents() {
 
@@ -203,6 +196,46 @@ public class App {
         }
     }
 
+    private void setupReviews() {
+
+        InteractiveReviewer reviewer = new InteractiveReviewer() ;
+
+        Review review ;
+
+        review = reviewer.createReview(reviews.getSize(), "Bob") ;
+        reviews.save(review) ;
+
+
+        review = reviewer.createReview(reviews.getSize(), "James") ;
+        reviews.save(review) ;
+
+
+        review = reviewer.createReview(reviews.getSize(), "Jeff") ;
+        reviews.save(review) ;
+
+    }
+
+    private void printReviews() {
+
+        for (Review review: reviews.getAll()) {
+
+            System.out.println("Review " + review.getId());
+
+            System.out.println("  " + review.getCommunicationAmount().getDescription()) ;
+
+            if (review.getLowCommunicationReason() != null)
+                System.out.println("  " + review.getLowCommunicationReason().getDescription()) ;
+
+            if (review.getMeetingContribution() != null)
+                System.out.println("  " + review.getMeetingContribution().getDescription()) ;
+
+            System.out.println("  " + review.getContributionAmount().getDescription()) ;
+
+            if (review.getContributionDetails() != null)
+                System.out.println("  " + review.getContributionDetails()) ;
+        }
+    }
+
 
     public static void main(String args[]) {
 
@@ -215,6 +248,9 @@ public class App {
         app.printAssignmentsAndGroups();
 
         app.printReviewQuestions();
+
+        app.setupReviews();
+        app.printReviews();
     }
 }
 

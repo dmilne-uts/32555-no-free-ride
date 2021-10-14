@@ -1,13 +1,21 @@
-package model;
+package nofreeride.model;
 
+import javax.persistence.*;
+
+@Entity
 public class Assignment {
 
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id ;
 
     private String name ;
 
-    public Assignment(Integer id, String name) {
-        this.id = id;
+    private Assignment() {
+
+    }
+
+    public Assignment(String name) {
         this.name = name;
     }
 

@@ -1,16 +1,25 @@
-package model;
+package nofreeride.model;
 
-import model.reviewing.CommunicationAmount;
-import model.reviewing.ContributionAmount;
-import model.reviewing.LowCommunicationReason;
-import model.reviewing.MeetingContribution;
+import nofreeride.model.reviewing.CommunicationAmount;
+import nofreeride.model.reviewing.ContributionAmount;
+import nofreeride.model.reviewing.LowCommunicationReason;
+import nofreeride.model.reviewing.MeetingContribution;
 
+import javax.persistence.*;
+
+@Entity
 public class Review {
 
     private static final double STRONG_SCORE = 0.25 ;
     private static final double MEDIUM_SCORE = 0.125 ;
 
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id ;
+
+    private Integer groupId ;
+    private Integer reviewerId ;
+    private Integer revieweeId ;
 
     private CommunicationAmount communicationAmount ;
     private LowCommunicationReason lowCommunicationReason ;
@@ -21,8 +30,14 @@ public class Review {
 
     private String contributionDetails ;
 
-    public Review(Integer id, CommunicationAmount communicationAmount, LowCommunicationReason lowCommunicationReason, MeetingContribution meetingContribution, ContributionAmount contributionAmount, String contributionDetails) {
-        this.id = id;
+    public Review(Integer id, Integer groupId, Integer reviewerId, Integer revieweeId) {
+        this.id = id ;
+        this.groupId = groupId ;
+        this.reviewerId = reviewerId ;
+        this.revieweeId = revieweeId ;
+    }
+
+    public void setDetails(CommunicationAmount communicationAmount, LowCommunicationReason lowCommunicationReason, MeetingContribution meetingContribution, ContributionAmount contributionAmount, String contributionDetails) {
         this.communicationAmount = communicationAmount;
         this.lowCommunicationReason = lowCommunicationReason;
         this.meetingContribution = meetingContribution;
@@ -34,6 +49,18 @@ public class Review {
 
     public Integer getId() {
         return id;
+    }
+
+    public Integer getGroupId() {
+        return groupId;
+    }
+
+    public Integer getReviewerId() {
+        return reviewerId;
+    }
+
+    public Integer getRevieweeId() {
+        return revieweeId;
     }
 
     public CommunicationAmount getCommunicationAmount() {

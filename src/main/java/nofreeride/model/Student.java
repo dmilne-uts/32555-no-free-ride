@@ -1,11 +1,21 @@
-package model;
+package nofreeride.model;
 
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Student {
 
+    @Id
     private Integer id ;
 
     private String firstName ;
     private String lastName ;
+
+    private Student() {
+
+    }
 
     public Student(Integer id, String firstName, String lastName) {
         this.id = id;

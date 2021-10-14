@@ -1,4 +1,4 @@
-package model.reviewing;
+package nofreeride.model.reviewing;
 
 public enum ContributionAmount {
 

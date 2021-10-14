@@ -1,10 +1,11 @@
-package repo;
+package nofreeride.repo;
 
-import model.Review;
+import nofreeride.model.Review;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+
 
 public class ReviewRepo {
 
@@ -19,15 +20,15 @@ public class ReviewRepo {
         this.reviewsById.put(review.getId(), review) ;
     }
 
-    public Review getById(Integer id) {
+    public Review findById(Integer id) {
         return this.reviewsById.get(id) ;
     }
 
-    public Collection<Review> getAll() {
+    public Collection<Review> findAll() {
         return this.reviewsById.values();
     }
 
-    public int getSize() {
+    public long count() {
         return this.reviewsById.size() ;
     }
 

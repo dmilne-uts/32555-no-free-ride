@@ -24,8 +24,8 @@ public class App implements InitializingBean {
     @Autowired
     private AssignmentRepo assignments ;
 
-    private ReviewRepo reviews = new ReviewRepo() ;
-
+    @Autowired
+    private ReviewRepo reviews ;
 
     @Autowired
     private InteractiveReviewer reviewer ;

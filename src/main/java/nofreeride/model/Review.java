@@ -29,9 +29,12 @@ public class Review {
     private Double score ;
 
     private String contributionDetails ;
+    
+    private Review() {
+    	
+    }
 
-    public Review(Integer id, Integer groupId, Integer reviewerId, Integer revieweeId) {
-        this.id = id ;
+    public Review(Integer groupId, Integer reviewerId, Integer revieweeId) {
         this.groupId = groupId ;
         this.reviewerId = reviewerId ;
         this.revieweeId = revieweeId ;

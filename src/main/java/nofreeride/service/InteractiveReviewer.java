@@ -156,7 +156,7 @@ public class InteractiveReviewer {
         Student reviewer = askGroupMember(group, "Who is writing this review?") ;
         Student reviewee = askGroupMember(group, "Who is this review about?") ;
 
-        Review review = new Review(1, group.getId(), reviewee.getId(), reviewer.getId()) ;
+        Review review = new Review(group.getId(), reviewee.getId(), reviewer.getId()) ;
 
 
         CommunicationAmount communicationAmount = null ;

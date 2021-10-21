@@ -1,11 +1,13 @@
 package nofreeride;
 
+import nofreeride.gui.ManageStudents;
 import nofreeride.model.*;
 import nofreeride.model.reviewing.*;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+
 import nofreeride.repo.*;
 import nofreeride.service.*;
 
@@ -244,15 +246,16 @@ public class App implements InitializingBean {
 
 
     public static void main(String args[]) {
-
-        SpringApplication.run(App.class, args);
+    	
+    	SpringApplicationBuilder builder = new SpringApplicationBuilder(App.class);
+        builder.headless(false).run(args);
 
     }
 
     @Override
     public void afterPropertiesSet() throws Exception {
 
-        setupStudents();
+        //setupStudents();
         printStudents();
 
         setupAssignmentsAndGroups();
@@ -260,8 +263,16 @@ public class App implements InitializingBean {
 
         printReviewQuestions();
 
-        setupReview();
-        printReviews();
+        //setupReview();
+        //printReviews();
+        
+        //ReviewViewer reviewViewer = new ReviewViewer() ;
+        //reviewViewer.pack();
+        //reviewViewer.setVisible(true);
+        
+        ManageStudents gui = new ManageStudents(this.students);  //(this.students) ;
+        gui.pack();
+        gui.setVisible(true);
     }
 }
 

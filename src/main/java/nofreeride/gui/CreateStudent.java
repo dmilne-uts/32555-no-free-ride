@@ -7,19 +7,28 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import nofreeride.model.Student;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class CreateStudent extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	
+	private Student student ;
+	
 	private JTextField txtStudentId;
 	private JTextField txtFirstName;
 	private JTextField txtLastName;
+	private JButton okButton;
+	private JButton cancelButton;
 
 	/**
 	 * Launch the application.
@@ -38,6 +47,9 @@ public class CreateStudent extends JDialog {
 	 * Create the dialog.
 	 */
 	public CreateStudent() {
+		
+		this.setModal(true);
+		
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -106,16 +118,47 @@ public class CreateStudent extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
+				okButton = new JButton("OK");
+				okButton.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						createStudent();
+						close();
+					}
+				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
-				JButton cancelButton = new JButton("Cancel");
+				cancelButton = new JButton("Cancel");
+				cancelButton.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						close();
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
 		}
+	}
+	
+	private void createStudent() {
+	    this.student = new Student(
+	        Integer.valueOf(txtStudentId.getText()),
+	        txtFirstName.getText(),
+	        txtLastName.getText()
+	    );
+	}
+	
+	private void close() {
+	    this.setVisible(false);
+	    this.dispose();
+	}
+	
+	public Student showDialog() {
+	    setVisible(true);
+	    return student;
 	}
 }

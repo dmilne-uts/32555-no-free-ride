@@ -117,8 +117,17 @@ public class ManageStudents extends JFrame {
 	}
 	
 	private void addStudent() {
-		CreateStudent dlg = new CreateStudent();
-		dlg.setVisible(true);
+		CreateStudent dlg = new CreateStudent() ;
+	    Student createdStudent = dlg.showDialog();
+
+	    if (createdStudent != null) {
+
+	        //save the student to the repository
+	        students.save(createdStudent) ;
+
+	        //update the table model, which will cause this new student to be shown in the table
+	        model.refreshData();
+	    }
 	}
 	
 	private void editStudent(Student student) {

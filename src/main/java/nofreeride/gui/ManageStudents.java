@@ -117,7 +117,7 @@ public class ManageStudents extends JFrame {
 	}
 	
 	private void addStudent() {
-		CreateStudent dlg = new CreateStudent() ;
+		EditOrCreateStudent dlg = new EditOrCreateStudent(null) ;
 	    Student createdStudent = dlg.showDialog();
 
 	    if (createdStudent != null) {
@@ -131,7 +131,17 @@ public class ManageStudents extends JFrame {
 	}
 	
 	private void editStudent(Student student) {
-		//TODO (in Step 3)
+		EditOrCreateStudent dlg = new EditOrCreateStudent(student) ;
+	    Student editedStudent = dlg.showDialog();
+
+	    if (editedStudent != null) {
+
+	        //save the student to the repository
+	        students.save(editedStudent) ;
+
+	        //update the table model, which will cause this new student to be shown in the table
+	        model.refreshData();
+	    }
 	}
 	
 	private class StudentTableModel extends AbstractTableModel {

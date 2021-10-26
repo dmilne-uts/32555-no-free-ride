@@ -22,7 +22,7 @@ import java.text.DecimalFormat;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class CreateStudent extends JDialog {
+public class EditOrCreateStudent extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	
@@ -39,7 +39,7 @@ public class CreateStudent extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			CreateStudent dialog = new CreateStudent();
+			EditOrCreateStudent dialog = new EditOrCreateStudent(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -50,7 +50,9 @@ public class CreateStudent extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public CreateStudent() {
+	public EditOrCreateStudent(Student student) {
+		
+		this.student = student ;
 		
 		this.setModal(true);
 		
@@ -58,7 +60,7 @@ public class CreateStudent extends JDialog {
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		JLabel lblInstructions = new JLabel("Please provide details of this new student");
+		JLabel lblInstructions = new JLabel("Please provide details of the student");
 		JLabel lblStudentId = new JLabel("Student ID");
 		txtStudentId = new JFormattedTextField(new DecimalFormat("##########"));
 		txtStudentId.addKeyListener(new KeyAdapter() {
@@ -164,6 +166,12 @@ public class CreateStudent extends JDialog {
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
+		}
+		
+		if (student != null) {
+			txtStudentId.setText(student.getId().toString());
+			txtFirstName.setText(student.getFirstName());
+			txtLastName.setText(student.getLastName());
 		}
 	}
 	

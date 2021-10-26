@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -17,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
 
 public class CreateStudent extends JDialog {
 
@@ -56,7 +58,7 @@ public class CreateStudent extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		JLabel lblInstructions = new JLabel("Please provide details of this new student");
 		JLabel lblStudentId = new JLabel("Student ID");
-		txtStudentId = new JTextField();
+		txtStudentId = new JFormattedTextField(new DecimalFormat("##########"));
 		txtStudentId.setColumns(10);
 		
 		JLabel lblFirstName = new JLabel("First Name");

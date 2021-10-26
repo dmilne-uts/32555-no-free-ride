@@ -117,7 +117,8 @@ public class ManageStudents extends JFrame {
 	}
 	
 	private void addStudent() {
-		// TODO (in Step 2)	
+		CreateStudent dlg = new CreateStudent();
+		dlg.setVisible(true);
 	}
 	
 	private void editStudent(Student student) {

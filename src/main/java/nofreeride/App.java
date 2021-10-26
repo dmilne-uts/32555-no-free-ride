@@ -255,7 +255,7 @@ public class App implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
 
-        //setupStudents();
+        setupStudents();
         printStudents();
 
         setupAssignmentsAndGroups();

@@ -90,23 +90,54 @@ public class Review {
         return this.score ;
     }
 
+    public boolean isValid() {
+    	
+    	if (communicationAmount == null)
+    		return false ;
+    	
+    	switch (communicationAmount) {
+    	case none:
+    	case low:
+    		if (lowCommunicationReason == null)
+    			return false ;
+    	case medium:
+    	case high:
+    		if (meetingContribution == null)
+    			return false ;
+    	}
+    	
+    	if (contributionAmount == null)
+    		return false ;
+    	
+    	switch (contributionAmount) {
+    	case unknown:
+    	case none:
+    		if (contributionDetails == null || contributionDetails.isEmpty())
+    			return false ;
+    	}
+    	
+    	return true ;
+    }
+    
+    
     private double calculateScore() {
 
         double score = 0;
 
-        switch (communicationAmount) {
-            case none:
-                score = score - STRONG_SCORE;
-                break ;
-            case low:
-                score = score - MEDIUM_SCORE ;
-                break ;
-            case medium:
-                score = score + MEDIUM_SCORE;
-                break ;
-            case high:
-                score = score + STRONG_SCORE;
-
+        if (communicationAmount != null) {
+	        switch (communicationAmount) {
+	            case none:
+	                score = score - STRONG_SCORE;
+	                break ;
+	            case low:
+	                score = score - MEDIUM_SCORE ;
+	                break ;
+	            case medium:
+	                score = score + MEDIUM_SCORE;
+	                break ;
+	            case high:
+	                score = score + STRONG_SCORE;
+	        }
         }
 
         if (lowCommunicationReason != null) {
@@ -134,19 +165,21 @@ public class Review {
             }
         }
 
-        switch (contributionAmount) {
-            case none:
-                score = score - STRONG_SCORE ;
-                break ;
-            case low:
-                score = score - MEDIUM_SCORE ;
-                break ;
-            case medium:
-                score = score + MEDIUM_SCORE ;
-                break ;
-            case high:
-                score = score + STRONG_SCORE ;
-                break ;
+        if (contributionAmount != null) {
+	        switch (contributionAmount) {
+	            case none:
+	                score = score - STRONG_SCORE ;
+	                break ;
+	            case low:
+	                score = score - MEDIUM_SCORE ;
+	                break ;
+	            case medium:
+	                score = score + MEDIUM_SCORE ;
+	                break ;
+	            case high:
+	                score = score + STRONG_SCORE ;
+	                break ;
+	        }
         }
 
         //below is some optional math.

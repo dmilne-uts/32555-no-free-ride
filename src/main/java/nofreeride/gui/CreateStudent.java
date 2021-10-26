@@ -19,6 +19,8 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class CreateStudent extends JDialog {
 
@@ -59,16 +61,34 @@ public class CreateStudent extends JDialog {
 		JLabel lblInstructions = new JLabel("Please provide details of this new student");
 		JLabel lblStudentId = new JLabel("Student ID");
 		txtStudentId = new JFormattedTextField(new DecimalFormat("##########"));
+		txtStudentId.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				okButton.setEnabled(inputComplete());
+			}
+		});
 		txtStudentId.setColumns(10);
 		
 		JLabel lblFirstName = new JLabel("First Name");
 		
 		txtFirstName = new JTextField();
+		txtFirstName.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				okButton.setEnabled(inputComplete());
+			}
+		});
 		txtFirstName.setColumns(10);
 		
 		JLabel lblLastName = new JLabel("Last Name");
 		
 		txtLastName = new JTextField();
+		txtLastName.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				okButton.setEnabled(inputComplete());
+			}
+		});
 		txtLastName.setColumns(10);
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(
@@ -121,6 +141,7 @@ public class CreateStudent extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				okButton = new JButton("OK");
+				okButton.setEnabled(false);
 				okButton.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
@@ -144,6 +165,20 @@ public class CreateStudent extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+	}
+	
+	private boolean inputComplete() {
+		
+		if (txtStudentId.getText().isEmpty() || !txtStudentId.isValid())
+			return false ;
+		
+		if (txtFirstName.getText().isEmpty())
+			return false ;
+		
+		if (txtLastName.getText().isEmpty())
+			return false ;
+		
+		return true ;
 	}
 	
 	private void createStudent() {
